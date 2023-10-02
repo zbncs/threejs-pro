@@ -6,7 +6,6 @@ import {
   Mesh,
   WebGLRenderer,
   AxesHelper,
-  Clock
 } from 'three'
 
 // 引入控制器
@@ -55,6 +54,13 @@ document.body.appendChild(renderer.domElement)
 // 创建轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement)
 
+// 设置阻尼
+/**
+ * 将其设置为true以启用阻尼（惯性），这将给控制器带来重量感。默认值为false。  
+ * 请注意，如果该值被启用，你将必须在你的动画循环里调用.update()。
+ */
+controls.enableDamping = true
+
 // 添加坐标系: 红色代表 X 轴. 绿色代表 Y 轴. 蓝色代表 Z 轴.(逆时针)
 const axesHelper = new AxesHelper(10)
 scene.add(axesHelper)
@@ -74,6 +80,7 @@ gsap.to(cube.rotation, {x: 2 * Math.PI, duration: 6, ease: 'power1.inOut', repea
 
 // 渲染函数
 function render() {
+  controls.update()
   // 渲染
   renderer.render(scene, camera)
 
@@ -82,3 +89,22 @@ function render() {
 }
 
 render()
+
+// 监听画面大小变化
+window.addEventListener('resize', () => {
+  // 更新摄像机
+  camera.aspect = window.innerWidth / window.innerHeight
+
+  // 更新摄像机的投影矩阵
+  camera.updateProjectionMatrix()
+
+  // 更新渲染器
+  renderer.setSize(window.innerWidth, window.innerHeight)
+
+  // 更新设备的像素比
+  renderer.setPixelRatio(window.devicePixelRatio)
+
+
+})
+
+
