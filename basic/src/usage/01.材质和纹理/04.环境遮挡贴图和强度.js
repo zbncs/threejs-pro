@@ -33,7 +33,7 @@ const geometry = new BoxGeometry(10, 10, 10)
 
 // 纹理贴图==================================================================
 const textureLoader = new TextureLoader()
-const treeColorTexture = textureLoader.load('./img/IMG_7315.JPG')
+const treeColorTexture = textureLoader.load('./img/IMG_7315.JPG') // 需要放到dist目录下
 
 
 
